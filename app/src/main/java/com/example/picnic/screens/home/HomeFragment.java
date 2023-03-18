@@ -19,7 +19,6 @@ import com.example.picnic.screens.home.views.HomeScreenViewMvc;
 
 public class HomeFragment extends Fragment {
 
-    private AppCompositionRoot appCompRoot;
     private ViewMvcFactory viewMvcFactory;
     private HomeFragmentController controller;
 
@@ -27,7 +26,7 @@ public class HomeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        appCompRoot = ((PicnicApp) (getContext().getApplicationContext())).getAppCompositionRoot();
+        AppCompositionRoot appCompRoot = ((PicnicApp) (getContext().getApplicationContext())).getAppCompositionRoot();
 
         this.viewMvcFactory = appCompRoot.getViewMvcFactory();
 

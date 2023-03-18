@@ -25,11 +25,14 @@ public class HomeScreenViewMvcImpl implements HomeScreenViewMvc {
         StaggeredGridLayoutManager lm = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
         lm.setItemPrefetchEnabled(true);
         rvPhotos.setLayoutManager(lm);
+
+        loader = rootView.findViewById(R.id.loader);
     }
 
     private final View rootView;
-    private HomePhotosAdapter homePhotosAdapter;
-    private RecyclerView rvPhotos;
+    private final View loader;
+    private final HomePhotosAdapter homePhotosAdapter;
+    private final RecyclerView rvPhotos;
 
     @Override
     public void onPermissionRejected() {
@@ -38,17 +41,18 @@ public class HomeScreenViewMvcImpl implements HomeScreenViewMvc {
 
     @Override
     public void bindPhotos(List<String> images, int pageNo, int offset) {
+        loader.setVisibility(View.GONE);
         homePhotosAdapter.submitData(images);
     }
 
     @Override
     public void onFetchingPhotos() {
-
+        loader.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onPhotosFetchFailure(String reason) {
-
+        loader.setVisibility(View.GONE);
     }
 
     @Override

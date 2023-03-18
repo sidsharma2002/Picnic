@@ -1,7 +1,6 @@
 package com.example.picnic.screens.home.views;
 
 import android.annotation.SuppressLint;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +35,7 @@ public class HomePhotosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         private final ImageView ivPhoto;
 
         public void setData(String photoPath) {
-            imageLoader.load(ivPhoto, photoPath);
+            imageLoader.loadFromPath(ivPhoto, photoPath);
         }
     }
 

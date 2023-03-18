@@ -6,7 +6,7 @@ import java.util.List;
 
 public class BaseObservable<Observer> implements Observable<Observer> {
 
-    private List<Observer> observers = new ArrayList<>();
+    private final List<Observer> observers = new ArrayList<>();
 
     @Override
     public void register(Observer observer) {

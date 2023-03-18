@@ -18,7 +18,7 @@ import java.io.InputStream;
 public class ImageLoaderGlideImpl implements ImageLoader {
 
     @Override
-    public void load(ImageView ivPhoto, String photoPath) {
+    public void loadFromPath(ImageView ivPhoto, String photoPath) {
         File file = new File(photoPath);
         Glide.with(ivPhoto.getContext()).load(file).into(ivPhoto);
     }

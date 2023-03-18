@@ -2,28 +2,27 @@ package com.example.picnic.screens.home.controllers;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
-import android.net.Uri;
-import android.util.Log;
-
+import com.example.picnic.common.observable.ObservableDataHolder;
+import com.example.picnic.common.observable.ObservableDataHolder.Observer;
 import com.example.picnic.common.permissions.RequestPermissionUseCase;
 import com.example.picnic.common.permissions.RequestPermissionUseCase.Listener;
-import com.example.picnic.screens.home.usecases.FetchLocallyStoredPhotosUseCase;
+import com.example.picnic.screens.home.usecases.FetchPhotosFromStorageUseCase;
 import com.example.picnic.screens.home.views.HomeScreenViewMvc;
 
 import java.util.List;
 
 public class HomeFragmentController {
 
-    public HomeFragmentController(FetchLocallyStoredPhotosUseCase fetchPhotosUseCase,
+    public HomeFragmentController(FetchPhotosFromStorageUseCase fetchPhotosUseCase,
                                   RequestPermissionUseCase requestPermissionUseCase) {
-        fetchLocallyStoredPhotosUseCase = fetchPhotosUseCase;
+        fetchPhotosFromStorageUseCase = fetchPhotosUseCase;
         this.requestPermissionUseCase = requestPermissionUseCase;
     }
 
     private HomeScreenViewMvc viewMvc;
 
     // use-cases
-    private final FetchLocallyStoredPhotosUseCase fetchLocallyStoredPhotosUseCase;
+    private final FetchPhotosFromStorageUseCase fetchPhotosFromStorageUseCase;
     private final RequestPermissionUseCase requestPermissionUseCase;
 
 
@@ -35,11 +34,11 @@ public class HomeFragmentController {
     }
 
     public void onStart() {
-        fetchLocallyStoredPhotosUseCase.register(fetchPhotosListener);
+        fetchPhotosFromStorageUseCase.obsImagePaths.register(imagesObserver);
     }
 
     public void onStop() {
-        fetchLocallyStoredPhotosUseCase.unregister(fetchPhotosListener);
+        fetchPhotosFromStorageUseCase.obsImagePaths.unregister(imagesObserver);
     }
 
     // Lifecycle Handling
@@ -51,7 +50,7 @@ public class HomeFragmentController {
             @Override
             public void onPermissionGranted() {
                 viewMvc.onFetchingPhotos();
-                fetchLocallyStoredPhotosUseCase.executeAsync();
+                fetchPhotosFromStorageUseCase.executeAsync();
             }
 
             @Override
@@ -65,16 +64,10 @@ public class HomeFragmentController {
     // --------------------------
     // Observers
 
-    private final FetchLocallyStoredPhotosUseCase.Listener fetchPhotosListener = new FetchLocallyStoredPhotosUseCase.Listener() {
+    private final Observer<List<String>> imagesObserver = new Observer<List<String>>() {
         @Override
-        public void onImagesFetched(List<String> images, int pageNo, int offset) {
-            Log.d("images", "size : " + images.size());
-            viewMvc.bindPhotos(images, pageNo, offset);
-        }
-
-        @Override
-        public void onFailure(String reason) {
-            viewMvc.onPhotosFetchFailure(reason);
+        public void onDataChanged(List<String> data) {
+            viewMvc.bindPhotos(data, 0, 0);
         }
     };
 
