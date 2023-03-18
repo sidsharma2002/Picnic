@@ -1,4 +1,4 @@
-package com.example.picnic.concurrency;
+package com.example.picnic.common.concurrency;
 
 import java.util.concurrent.Future;
 import java.util.concurrent.SynchronousQueue;

@@ -1,11 +1,9 @@
 package com.example.picnic.di.application.controllers;
 
-import android.content.Context;
-
 import com.example.picnic.app.PicnicApp;
 import com.example.picnic.di.activity.usecases.ActivityUseCaseFactory;
 import com.example.picnic.di.application.usecases.UseCaseFactory;
-import com.example.picnic.screens.home.HomeFragmentController;
+import com.example.picnic.screens.home.controllers.HomeFragmentController;
 
 public class ControllerFactory {
 

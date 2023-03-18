@@ -1,4 +1,4 @@
-package com.example.picnic.concurrency;
+package com.example.picnic.common.concurrency;
 
 import android.os.Handler;
 import android.os.Looper;

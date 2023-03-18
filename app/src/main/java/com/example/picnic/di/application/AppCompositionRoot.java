@@ -3,6 +3,10 @@ package com.example.picnic.di.application;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.picnic.app.PicnicApp;
+import com.example.picnic.common.concurrency.BgThreadPoster;
+import com.example.picnic.common.concurrency.UiThreadPoster;
+import com.example.picnic.common.imageLoader.ImageLoader;
+import com.example.picnic.common.imageLoader.ImageLoaderGlideImpl;
 import com.example.picnic.di.activity.usecases.ActivityUseCaseFactory;
 import com.example.picnic.di.application.controllers.ControllerFactory;
 import com.example.picnic.di.application.usecases.UseCaseFactory;
@@ -15,13 +19,21 @@ public class AppCompositionRoot {
     private ViewMvcFactory viewMvcFactory;
     private ControllerFactory controllerFactory;
     private UseCaseFactory useCaseFactory;
+    private BgThreadPoster bgThreadPoster;
+    private UiThreadPoster uiThreadPoster;
+    private ImageLoader imageLoader;
 
     public AppCompositionRoot(PicnicApp appContext) {
 
         this.appContext = appContext;
 
-        viewMvcFactory = new ViewMvcFactory();
-        useCaseFactory = new UseCaseFactory(appContext);
+        this.bgThreadPoster = new BgThreadPoster();
+        this.uiThreadPoster = new UiThreadPoster();
+
+        this.imageLoader = new ImageLoaderGlideImpl();
+
+        viewMvcFactory = new ViewMvcFactory(imageLoader);
+        useCaseFactory = new UseCaseFactory(appContext, bgThreadPoster, uiThreadPoster);
         controllerFactory = new ControllerFactory(appContext, useCaseFactory);
     }
 
@@ -33,7 +45,7 @@ public class AppCompositionRoot {
         return controllerFactory;
     }
 
-    public ActivityUseCaseFactory getActivityUseCaseFactory(AppCompatActivity activity) {
+    public ActivityUseCaseFactory getNewActivityUseCaseFactory(AppCompatActivity activity) {
         return new ActivityUseCaseFactory(activity); // don't keep reference of this.
     }
 

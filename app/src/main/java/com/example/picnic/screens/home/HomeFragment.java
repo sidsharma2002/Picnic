@@ -14,6 +14,8 @@ import com.example.picnic.app.PicnicApp;
 import com.example.picnic.di.activity.usecases.ActivityUseCaseFactory;
 import com.example.picnic.di.application.AppCompositionRoot;
 import com.example.picnic.di.application.viewMvcs.ViewMvcFactory;
+import com.example.picnic.screens.home.controllers.HomeFragmentController;
+import com.example.picnic.screens.home.views.HomeScreenViewMvc;
 
 public class HomeFragment extends Fragment {
 
@@ -29,7 +31,7 @@ public class HomeFragment extends Fragment {
 
         this.viewMvcFactory = appCompRoot.getViewMvcFactory();
 
-        ActivityUseCaseFactory activityFactory = appCompRoot.getActivityUseCaseFactory((AppCompatActivity) getActivity());
+        ActivityUseCaseFactory activityFactory = appCompRoot.getNewActivityUseCaseFactory((AppCompatActivity) getActivity());
         controller = appCompRoot.getControllerFactory().getHomeFragmentController(activityFactory);
     }
 
