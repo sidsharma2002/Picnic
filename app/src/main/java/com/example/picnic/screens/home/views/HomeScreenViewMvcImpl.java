@@ -1,7 +1,5 @@
 package com.example.picnic.screens.home.views;
 
-import android.media.Image;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -9,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.picnic.R;
-import com.example.picnic.common.imageLoader.ImageLoader;
+import com.example.picnic.common.image.ImageLoader;
 
 import java.util.List;
 

@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.picnic.R;
-import com.example.picnic.common.imageLoader.ImageLoader;
+import com.example.picnic.common.image.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,13 +62,8 @@ public class HomePhotosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @SuppressLint("NotifyDataSetChanged")
     public void submitData(List<String> newPhotoUris) {
-        if (photoUris.isEmpty()) {
-            this.photoUris.addAll(newPhotoUris);
-            notifyDataSetChanged();
-        } else {
-            int lastIndex = photoUris.size() - 1;
-            this.photoUris.addAll(newPhotoUris);
-            notifyItemRangeInserted(lastIndex, newPhotoUris.size());
-        }
+        int last = this.photoUris.size();
+        this.photoUris.addAll(newPhotoUris);
+        notifyItemRangeInserted(last, newPhotoUris.size());
     }
 }

@@ -18,8 +18,8 @@ public class ControllerFactory {
     public HomeFragmentController getHomeFragmentController(ActivityUseCaseFactory activityUseCaseFactory) {
         return new HomeFragmentController(
                 useCaseFactory.getFetchLocallyStoredPhotosUseCase(),
-                activityUseCaseFactory.getRequestPermissionUseCase()
-        );
+                activityUseCaseFactory.getRequestPermissionUseCase(),
+                useCaseFactory.getFaceDetector());
     }
 
 }

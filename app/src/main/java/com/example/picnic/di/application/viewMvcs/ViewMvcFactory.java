@@ -2,7 +2,7 @@ package com.example.picnic.di.application.viewMvcs;
 
 import android.view.LayoutInflater;
 
-import com.example.picnic.common.imageLoader.ImageLoader;
+import com.example.picnic.common.image.ImageLoader;
 import com.example.picnic.screens.home.views.HomeScreenViewMvc;
 import com.example.picnic.screens.home.views.HomeScreenViewMvcImpl;
 

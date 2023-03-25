@@ -3,6 +3,7 @@ package com.example.picnic.di.application.usecases;
 import com.example.picnic.app.PicnicApp;
 import com.example.picnic.common.concurrency.BgThreadPoster;
 import com.example.picnic.common.concurrency.UiThreadPoster;
+import com.example.picnic.faceDetection.FaceDetector;
 import com.example.picnic.screens.home.usecases.FetchPhotosFromStorageUseCase;
 
 public class UseCaseFactory {
@@ -19,5 +20,9 @@ public class UseCaseFactory {
 
     public FetchPhotosFromStorageUseCase getFetchLocallyStoredPhotosUseCase() {
         return new FetchPhotosFromStorageUseCase(appContext, bgThreadPoster, uiThreadPoster);
+    }
+
+    public FaceDetector getFaceDetector() {
+        return new FaceDetector(appContext, bgThreadPoster, uiThreadPoster);
     }
 }
