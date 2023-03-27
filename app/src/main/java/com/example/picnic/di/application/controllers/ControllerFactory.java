@@ -7,8 +7,8 @@ import com.example.picnic.screens.home.controllers.HomeFragmentController;
 
 public class ControllerFactory {
 
-    private PicnicApp appContext;
-    private UseCaseFactory useCaseFactory;
+    private final PicnicApp appContext;
+    private final UseCaseFactory useCaseFactory;
 
     public ControllerFactory(PicnicApp appContext, UseCaseFactory useCaseFactory) {
         this.appContext = appContext;
