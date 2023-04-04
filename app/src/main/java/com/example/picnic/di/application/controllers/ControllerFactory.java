@@ -4,6 +4,8 @@ import com.example.picnic.app.PicnicApp;
 import com.example.picnic.di.activity.usecases.ActivityUseCaseFactory;
 import com.example.picnic.di.application.usecases.UseCaseFactory;
 import com.example.picnic.screens.home.controllers.HomeFragmentController;
+import com.example.picnic.screens.imageDetail.controller.ImageDetailFragmentController;
+import com.example.picnic.usecases.faceDetection.DetectedFacesData;
 
 public class ControllerFactory {
 
@@ -19,7 +21,11 @@ public class ControllerFactory {
         return new HomeFragmentController(
                 useCaseFactory.getFetchLocallyStoredPhotosUseCase(),
                 activityUseCaseFactory.getRequestPermissionUseCase(),
-                useCaseFactory.getFaceDetector());
+                useCaseFactory.getFaceDetector(),
+                activityUseCaseFactory.getHomeNavigator());
     }
 
+    public ImageDetailFragmentController getImageDetailFragmentController(DetectedFacesData detectedFacesData) {
+        return new ImageDetailFragmentController(detectedFacesData);
+    }
 }

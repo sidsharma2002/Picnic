@@ -32,8 +32,8 @@ public class AppCompositionRoot {
 
         this.imageLoader = new ImageLoaderGlideImpl();
 
-        viewMvcFactory = new ViewMvcFactory(imageLoader);
         useCaseFactory = new UseCaseFactory(appContext, bgThreadPoster, uiThreadPoster);
+        viewMvcFactory = new ViewMvcFactory(imageLoader, useCaseFactory);
         controllerFactory = new ControllerFactory(appContext, useCaseFactory);
     }
 
@@ -43,6 +43,10 @@ public class AppCompositionRoot {
 
     public ControllerFactory getControllerFactory() {
         return controllerFactory;
+    }
+
+    public UseCaseFactory getUseCaseFactory() {
+        return useCaseFactory;
     }
 
     public ActivityUseCaseFactory getNewActivityUseCaseFactory(AppCompatActivity activity) {

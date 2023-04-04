@@ -3,6 +3,7 @@ package com.example.picnic.di.application.usecases;
 import com.example.picnic.app.PicnicApp;
 import com.example.picnic.common.concurrency.BgThreadPoster;
 import com.example.picnic.common.concurrency.UiThreadPoster;
+import com.example.picnic.common.utils.ScreenUtils;
 import com.example.picnic.usecases.StoreFaceDataToStorageUseCase;
 import com.example.picnic.usecases.faceDetection.FaceDetector;
 import com.example.picnic.usecases.FetchPhotosFromStorageUseCase;
@@ -29,5 +30,9 @@ public class UseCaseFactory {
 
     public FaceDetector getFaceDetector() {
         return new FaceDetector(appContext, getStoreFaceDataToStorageUseCase());
+    }
+
+    public ScreenUtils getScreenUtils() {
+        return new ScreenUtils(appContext);
     }
 }

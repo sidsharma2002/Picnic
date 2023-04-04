@@ -16,6 +16,7 @@ import com.google.mlkit.vision.face.FaceDetection;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -42,9 +43,8 @@ public class FaceDetector {
         detector = FaceDetection.getClient(options);
     }
 
-    private MutableObservableDataHolder<String> _obsFaces = new MutableObservableDataHolder<>();
-    public ObservableDataHolder<String> obsFaces = _obsFaces;
-
+    private MutableObservableDataHolder<DetectedFacesData> _obsFaces = new MutableObservableDataHolder<>();
+    public ObservableDataHolder<DetectedFacesData> obsFaces = _obsFaces;
 
     public void detectFaceAndNotify(String path) {
         executor.submit(() -> {
@@ -58,7 +58,7 @@ public class FaceDetector {
 
             storeFaceDataToStorageUseCase.storeSync(path, result);
 
-            _obsFaces.setData(path);
+            _obsFaces.setData(new DetectedFacesData(path, result));
         });
     }
 

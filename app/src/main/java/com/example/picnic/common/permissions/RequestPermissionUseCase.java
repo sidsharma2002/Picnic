@@ -21,11 +21,17 @@ public class RequestPermissionUseCase {
 
     private final AppCompatActivity activity;
 
+    private boolean registeredAlready = false;
+
     public void request(String permission, Listener listener) {
 
         String[] permissionArr = {permission};
 
+        if (registeredAlready) return;
+
         activity.registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+
+            registeredAlready = true;
 
             if (Boolean.TRUE.equals(result.get(permissionArr[0])))
                 listener.onPermissionGranted();

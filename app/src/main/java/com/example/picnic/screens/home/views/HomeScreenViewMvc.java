@@ -1,14 +1,19 @@
 package com.example.picnic.screens.home.views;
 
-import android.net.Uri;
 import android.view.View;
 
-import java.util.List;
+import com.example.picnic.common.observable.Observable;
+import com.example.picnic.usecases.faceDetection.DetectedFacesData;
 
-public interface HomeScreenViewMvc {
+public interface HomeScreenViewMvc extends Observable<HomeScreenViewMvc.Listener> {
+
+    interface Listener {
+        void onImageClicked(int position, DetectedFacesData detectedFacesData);
+    }
+
     void onPermissionRejected();
 
-    void bindPhotos(List<String> images, int pageNo, int offset);
+    void bindPhotos(DetectedFacesData detectedFacesData, int pageNo, int offset);
     void onFetchingPhotos();
     void onPhotosFetchFailure(String reason);
 

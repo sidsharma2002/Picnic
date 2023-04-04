@@ -11,19 +11,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.picnic.R;
 import com.example.picnic.common.image.ImageLoader;
+import com.example.picnic.usecases.faceDetection.DetectedFacesData;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomePhotosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    interface Listener {
+        void onImageClicked(int position, DetectedFacesData detectedFacesData);
+    }
+
     public HomePhotosAdapter(ImageLoader imageLoader) {
         this.imageLoader = imageLoader;
     }
 
     private final ImageLoader imageLoader;
-    private final List<String> photoUris = new ArrayList<>();
-
+    private Listener listener;
+    private final List<DetectedFacesData> photoUris = new ArrayList<>();
 
     public class PhotosViewHolder extends RecyclerView.ViewHolder {
 
@@ -36,6 +41,10 @@ public class HomePhotosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public void setData(String photoPath) {
             imageLoader.loadFromPath(ivPhoto, photoPath);
+
+            ivPhoto.setOnClickListener(v -> {
+                listener.onImageClicked(this.getAdapterPosition(), photoUris.get(getAdapterPosition()));
+            });
         }
     }
 
@@ -52,7 +61,7 @@ public class HomePhotosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         PhotosViewHolder photoHolder = (PhotosViewHolder) holder;
-        photoHolder.setData(photoUris.get(position));
+        photoHolder.setData(photoUris.get(position).getImagePath());
     }
 
     @Override
@@ -61,9 +70,13 @@ public class HomePhotosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void submitData(List<String> newPhotoUris) {
+    public void submitData(DetectedFacesData detectedFacesData) {
         int last = this.photoUris.size();
-        this.photoUris.addAll(newPhotoUris);
-        notifyItemRangeInserted(last, newPhotoUris.size());
+        this.photoUris.add(detectedFacesData);
+        notifyItemInserted(last);
+    }
+
+    void bindListener(Listener listener) {
+        this.listener = listener;
     }
 }

@@ -3,27 +3,33 @@ package com.example.picnic.screens.home.views;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.picnic.R;
 import com.example.picnic.common.image.ImageLoader;
+import com.example.picnic.common.observable.BaseObservable;
+import com.example.picnic.usecases.faceDetection.DetectedFacesData;
 
-import java.util.List;
-
-public class HomeScreenViewMvcImpl implements HomeScreenViewMvc {
+public class HomeScreenViewMvcImpl extends BaseObservable<HomeScreenViewMvc.Listener> implements HomeScreenViewMvc {
 
     public HomeScreenViewMvcImpl(LayoutInflater layoutInflater, ImageLoader imageLoader) {
         rootView = layoutInflater.inflate(R.layout.fragment_home, null, false);
 
         // setup rv
         rvPhotos = rootView.findViewById(R.id.rv_photos);
-        homePhotosAdapter = new HomePhotosAdapter(imageLoader);
-        rvPhotos.setAdapter(homePhotosAdapter);
-        StaggeredGridLayoutManager lm = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
-        lm.setItemPrefetchEnabled(true);
-        rvPhotos.setLayoutManager(lm);
 
+        homePhotosAdapter = new HomePhotosAdapter(imageLoader);
+        homePhotosAdapter.bindListener((position, detectedFacesData) -> {
+            for (Listener listener : getObservers()) {
+                listener.onImageClicked(position, detectedFacesData);
+            }
+        });
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext());
+        rvPhotos.setLayoutManager(linearLayoutManager);
+
+        rvPhotos.setAdapter(homePhotosAdapter);
         loader = rootView.findViewById(R.id.loader);
     }
 
@@ -38,9 +44,9 @@ public class HomeScreenViewMvcImpl implements HomeScreenViewMvc {
     }
 
     @Override
-    public void bindPhotos(List<String> images, int pageNo, int offset) {
+    public void bindPhotos(DetectedFacesData detectedFacesData, int pageNo, int offset) {
         loader.setVisibility(View.GONE);
-        homePhotosAdapter.submitData(images);
+        homePhotosAdapter.submitData(detectedFacesData);
     }
 
     @Override
