@@ -3,6 +3,7 @@ package com.example.picnic.common.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.WindowInsets;
 
@@ -26,6 +27,14 @@ public class ScreenUtils {
         } else {
             return 0;
         }
+    }
+
+    public float dpToPixels(int value) {
+        return TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                value,
+                context.getResources().getDisplayMetrics()
+        );
     }
 
 }

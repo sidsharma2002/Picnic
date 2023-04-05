@@ -37,6 +37,10 @@ public class AppCompositionRoot {
         controllerFactory = new ControllerFactory(appContext, useCaseFactory);
     }
 
+    public UiThreadPoster getUiThreadPoster() {
+        return uiThreadPoster;
+    }
+
     public ViewMvcFactory getViewMvcFactory() {
         return viewMvcFactory;
     }

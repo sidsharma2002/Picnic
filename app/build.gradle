@@ -36,6 +36,8 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.10.1'
 
+    implementation 'com.romandanylyk:pageindicatorview:1.0.3'
+
     // MLKit Face Detection
     implementation 'com.google.mlkit:face-detection:16.1.5'
 
