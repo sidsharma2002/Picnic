@@ -51,7 +51,7 @@ public class HomeScreenViewMvcImpl extends BaseObservable<HomeScreenViewMvc.List
 
     @Override
     public void onFetchingPhotos() {
-        loader.setVisibility(View.VISIBLE);
+        //loader.setVisibility(View.VISIBLE);
     }
 
     @Override

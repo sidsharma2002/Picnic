@@ -20,7 +20,5 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.main_frag_container, new HomeFragment())
                     .commit();
         }
-
-        getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
     }
 }

@@ -90,16 +90,16 @@ public class HomeFragmentController {
     private final Observer<List<String>> imagesObserver = new Observer<List<String>>() {
         @Override
         public void onDataChanged(List<String> data) {
-            if (isDetectorBusy) return;
-            isDetectorBusy = true;
-
-            int i = 0;
-            for (String path : data) {
-                faceDetector.detectFaceAndNotify(path);
-
-                if (++i > 100)
-                    return;
-            }
+//            if (isDetectorBusy) return;
+//            isDetectorBusy = true;
+//
+//            int i = 0;
+//            for (String path : data) {
+//                faceDetector.detectFaceAndNotify(path);
+//
+//                if (++i > 100)
+//                    return;
+//            }
         }
     };
 
