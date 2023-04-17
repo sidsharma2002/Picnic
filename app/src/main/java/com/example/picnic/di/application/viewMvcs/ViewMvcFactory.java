@@ -22,7 +22,7 @@ public class ViewMvcFactory {
     }
 
     public HomeScreenViewMvc getHomeScreenViewMvc(LayoutInflater layoutInflater) {
-        return new HomeScreenViewMvcImpl(layoutInflater, imageLoader);
+        return new HomeScreenViewMvcImpl(layoutInflater, imageLoader, useCaseFactory.getScreenUtils());
     }
 
     public ImageDetailViewMvc getImageDetailViewMvc(LayoutInflater layoutInflater, DetectedFacesData detectedFacesData) {

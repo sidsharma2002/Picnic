@@ -1,7 +1,9 @@
 package com.example.picnic.screens.home.views;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,34 +11,42 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.picnic.R;
 import com.example.picnic.common.image.ImageLoader;
 import com.example.picnic.common.observable.BaseObservable;
+import com.example.picnic.common.utils.ScreenUtils;
+import com.example.picnic.screens.homeContent.HomeContentAdapter;
 import com.example.picnic.usecases.faceDetection.DetectedFacesData;
+
+import java.util.List;
 
 public class HomeScreenViewMvcImpl extends BaseObservable<HomeScreenViewMvc.Listener> implements HomeScreenViewMvc {
 
-    public HomeScreenViewMvcImpl(LayoutInflater layoutInflater, ImageLoader imageLoader) {
+    public HomeScreenViewMvcImpl(LayoutInflater layoutInflater, ImageLoader imageLoader, ScreenUtils screenUtils) {
+
         rootView = layoutInflater.inflate(R.layout.fragment_home, null, false);
 
-        // setup rv
-        rvPhotos = rootView.findViewById(R.id.rv_photos);
+        // find view by ids
+        tvGreeting = rootView.findViewById(R.id.tv_greet);
+        rvHomeContent = rootView.findViewById(R.id.vp_content);
 
-        homePhotosAdapter = new HomePhotosAdapter(imageLoader);
-        homePhotosAdapter.bindListener((position, detectedFacesData) -> {
-            for (Listener listener : getObservers()) {
-                listener.onImageClicked(position, detectedFacesData);
-            }
-        });
+        homeContentAdapter = new HomeContentAdapter(imageLoader);
+        rvHomeContent.setAdapter(homeContentAdapter);
+        rvHomeContent.setLayoutManager(new LinearLayoutManager(rootView.getContext()));
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext());
-        rvPhotos.setLayoutManager(linearLayoutManager);
+        boolean isDarkMode = screenUtils.isDarkMode();
 
-        rvPhotos.setAdapter(homePhotosAdapter);
-        loader = rootView.findViewById(R.id.loader);
+        if (isDarkMode)
+            rootView.setBackgroundColor(Color.BLACK);
+
+        setGreetingsText();
+    }
+
+    private void setGreetingsText() {
+        tvGreeting.setText("Good Morning");
     }
 
     private final View rootView;
-    private final View loader;
-    private final HomePhotosAdapter homePhotosAdapter;
-    private final RecyclerView rvPhotos;
+    private final TextView tvGreeting;
+    private final RecyclerView rvHomeContent;
+    private final HomeContentAdapter homeContentAdapter;
 
     @Override
     public void onPermissionRejected() {
@@ -45,18 +55,20 @@ public class HomeScreenViewMvcImpl extends BaseObservable<HomeScreenViewMvc.List
 
     @Override
     public void bindPhotos(DetectedFacesData detectedFacesData, int pageNo, int offset) {
-        loader.setVisibility(View.GONE);
-        homePhotosAdapter.submitData(detectedFacesData);
+
+    }
+
+    @Override
+    public void submitAllFetchedImages(List<String> images) {
+        homeContentAdapter.submitImages(images);
     }
 
     @Override
     public void onFetchingPhotos() {
-        //loader.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onPhotosFetchFailure(String reason) {
-        loader.setVisibility(View.GONE);
     }
 
     @Override

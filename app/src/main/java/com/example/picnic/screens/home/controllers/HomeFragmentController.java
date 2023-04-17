@@ -90,6 +90,9 @@ public class HomeFragmentController {
     private final Observer<List<String>> imagesObserver = new Observer<List<String>>() {
         @Override
         public void onDataChanged(List<String> data) {
+
+            viewMvc.submitAllFetchedImages(data);
+
 //            if (isDetectorBusy) return;
 //            isDetectorBusy = true;
 //

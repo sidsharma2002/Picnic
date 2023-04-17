@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cv_dates_heading"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="1dp"
     android:clickable="true"
     android:focusable="true"
     app:cardBackgroundColor="?attr/colorPrimary"
-    app:cardCornerRadius="18dp"
+    app:cardCornerRadius="@dimen/standard_card_radius"
     app:cardElevation="4dp">
 
     <LinearLayout
@@ -22,16 +23,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="WED"
-            android:textColor="?attr/colorOnPrimary" />
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="12dp"
+            tools:text="FRI" />
 
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="12"
-            android:textColor="?attr/colorOnPrimary" />
+            android:fontFamily="sans-serif-medium"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="18dp"
+            tools:text="12" />
 
         <View
             android:id="@+id/ninja"
