@@ -63,10 +63,10 @@ public class DateHeadingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         private final Context context;
         private final ScreenUtils screenUtils;
 
-        public void setData(Boolean isToday, String day, String date) {
+        public void setData(Boolean isSelected, String day, String date) {
             Log.d("CALENDAR", "day text setData " + day);
 
-            if (isToday) {
+            if (isSelected) {
                 parent.setCardBackgroundColor(context.getColor(R.color.purple_500)); // couldn't find reliable way to get themed color like colorPrimary.
                 tvDay.setTextColor(context.getColor(R.color.white));
                 //tvDay.setTextSize(16);
@@ -101,6 +101,15 @@ public class DateHeadingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
+    private int currentSelectedPos = 5;
+
+    public void onCurrentSelectedPosChanged(int newPos) {
+        int tempPos = currentSelectedPos;
+        currentSelectedPos = newPos;
+        notifyItemChanged(tempPos);
+        notifyItemChanged(newPos);
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -119,7 +128,7 @@ public class DateHeadingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         if (position == todaysDayPos) {
             ((DateViewHolder) holder).setData(
-                    true,
+                    currentSelectedPos == position,
                     dayOfWeek.toString(), String.valueOf(day));
             return;
         }
@@ -131,7 +140,7 @@ public class DateHeadingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             LocalDate currentPosDayLD = currentLocalDate.plus(Period.ofDays(diff));
 
             ((DateViewHolder) holder).setData(
-                    false,
+                    currentSelectedPos == position,
                     currentPosDayLD.getDayOfWeek().toString(), String.valueOf(currentPosDayLD.getDayOfMonth()));
 
             return;
@@ -142,7 +151,7 @@ public class DateHeadingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         LocalDate currentPosDayLD = currentLocalDate.minus(Period.ofDays(diff));
 
         ((DateViewHolder) holder).setData(
-                false,
+                currentSelectedPos == position,
                 currentPosDayLD.getDayOfWeek().toString(), String.valueOf(currentPosDayLD.getDayOfMonth()));
     }
 

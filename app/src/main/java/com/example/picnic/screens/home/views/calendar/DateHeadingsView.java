@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.PagerSnapHelper;
@@ -42,6 +43,13 @@ public class DateHeadingsView extends LinearLayout {
     private final RecyclerView vpDates;
     private final DateHeadingAdapter adapter;
     private final ScreenUtils screenUtils;
+
+    public void notifyCurrentlySelectedItem(int newPos) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            adapter.onCurrentSelectedPosChanged(newPos);
+            vpDates.scrollToPosition(newPos);
+        }
+    }
 
     @Override
     protected void onAttachedToWindow() {
