@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.picnic.R;
 import com.example.picnic.common.image.ImageLoader;
 import com.example.picnic.screens.homeContent.HomeContentAdapter;
+import com.example.picnic.screens.homeContent.ScheduledTaskData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +34,9 @@ public class HomeVpAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         private final ImageLoader imageLoader;
         private final RecyclerView rvHomeContent;
 
-        public void setData(List<String> allImages) {
+        public void setData(List<String> allImages, List<ScheduledTaskData> dataList) {
             HomeContentAdapter homeContentAdapter = new HomeContentAdapter(imageLoader);
-            homeContentAdapter.submitImages(allImages);
+            homeContentAdapter.submitImages(allImages, dataList);
             rvHomeContent.setAdapter(homeContentAdapter);
             rvHomeContent.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
         }
@@ -57,18 +58,27 @@ public class HomeVpAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof MainViewHolder) {
-            ((MainViewHolder) holder).setData(allImages);
+            ((MainViewHolder) holder).setData(allImages, dataList);
         }
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return dataList.size();
     }
 
     private List<String> allImages = new ArrayList<>();
+    private List<ScheduledTaskData> dataList = new ArrayList<>();
+
+    private int dataSubmittedCount = 0;
 
     public void submitImages(List<String> images) {
         allImages = images;
+        dataSubmittedCount++;
+    }
+
+    public void submitHomeContent(List<ScheduledTaskData> dataList) {
+        this.dataList = dataList;
+        dataSubmittedCount++;
     }
 }

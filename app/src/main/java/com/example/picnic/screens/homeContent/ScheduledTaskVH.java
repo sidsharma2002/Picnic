@@ -49,23 +49,7 @@ public class ScheduledTaskVH extends RecyclerView.ViewHolder {
     private final ImageView iv3;
     private final HorizontalScrollView svImagesParent;
 
-    public void bindData(List<String> allImages) {
-
-        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        String ampm = "am";
-
-        if (hour > 12) {
-            hour -= 12;
-            ampm = "pm";
-        }
-
-        int scheduledTime = hour + 1 + getAdapterPosition();
-
-        if (scheduledTime < 12)
-            tv2.setText(scheduledTime + ampm);
-        else
-            tv2.setText("unknown");
-
+    public void bindData(List<String> allImages, ScheduledTaskData data) {
         if (allImages.size() < 3 || allImages.size() - 1 < getAdapterPosition()) {
             svImagesParent.setVisibility(View.GONE);
             return;

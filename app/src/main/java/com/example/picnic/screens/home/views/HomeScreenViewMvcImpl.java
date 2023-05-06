@@ -17,6 +17,7 @@ import com.example.picnic.common.utils.ScreenUtils;
 import com.example.picnic.screens.home.views.calendar.DateHeadingsView;
 import com.example.picnic.screens.home.views.homeViewpager.HomeVpAdapter;
 import com.example.picnic.screens.homeContent.HomeContentAdapter;
+import com.example.picnic.screens.homeContent.ScheduledTaskData;
 import com.example.picnic.usecases.faceDetection.DetectedFacesData;
 
 import java.util.List;
@@ -82,6 +83,11 @@ public class HomeScreenViewMvcImpl extends BaseObservable<HomeScreenViewMvc.List
     @Override
     public void bindPhotos(DetectedFacesData detectedFacesData, int pageNo, int offset) {
 
+    }
+
+    @Override
+    public void bindData(List<ScheduledTaskData> dataList) {
+        homeVpAdapter.submitHomeContent(dataList);
     }
 
     @Override

@@ -28,19 +28,22 @@ public class HomeContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ScheduledTaskVH) {
-            ((ScheduledTaskVH) holder).bindData(allImages);
+            ((ScheduledTaskVH) holder).bindData(allImages, dataList.get(position));
         }
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return dataList.size();
     }
 
+    // data lists
     private List<String> allImages = new ArrayList<>();
+    private List<ScheduledTaskData> dataList = new ArrayList<>();
 
-    public void submitImages(List<String> images) {
+    public void submitImages(List<String> images, List<ScheduledTaskData> dataList) {
         allImages = images;
+        this.dataList = dataList;
         notifyDataSetChanged();
     }
 }
